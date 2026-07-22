@@ -1,0 +1,330 @@
+/* ============================================================
+   CSS Custom Properties — sourced from design-tokens.json
+   ============================================================ */
+:root {
+  /* Colors */
+  --color-bg-primary: #0f172a;
+  --color-bg-secondary: #1e293b;
+  --color-bg-cell: #1e293b;
+  --color-bg-cell-hover: #334155;
+  --color-marker-x: #38bdf8;
+  --color-marker-o: #fb7185;
+  --color-winning-cell: #fbbf24;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-status: #e2e8f0;
+  --color-border: #334155;
+  --color-border-focus: #818cf8;
+  --color-btn-bg: #6366f1;
+  --color-btn-bg-hover: #4f46e5;
+  --color-btn-text: #ffffff;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+
+  /* Typography */
+  --font-family-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.25rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 2rem;
+  --font-size-cell: clamp(2rem, 8vw, 3.5rem);
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --line-height-base: 1.5;
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  /* Shadows */
+  --shadow-cell: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-focus: 0 0 0 3px rgba(129, 140, 248, 0.6);
+  --shadow-btn: 0 4px 6px rgba(0, 0, 0, 0.25);
+
+  /* Board */
+  --board-gap: 0.5rem;
+  --board-size: min(90vw, 28rem);
+  --cell-size: calc((var(--board-size) - var(--board-gap) * 2) / 3);
+
+  /* Transitions */
+  --transition-fast: 120ms ease;
+  --transition-base: 200ms ease;
+
+  /* Breakpoints (reference only — used in media queries below) */
+  /* --bp-sm: 480px */
+  /* --bp-md: 768px */
+  /* --bp-lg: 1024px */
+}
+
+/* ============================================================
+   Reset / Base
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-base);
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================================================
+   App Shell
+   ============================================================ */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl) var(--spacing-md);
+  width: 100%;
+  max-width: 36rem;
+}
+
+.app__title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.04em;
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+/* ============================================================
+   Status
+   ============================================================ */
+.status {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-status);
+  text-align: center;
+  min-height: 2rem;
+  line-height: 1.4;
+}
+
+.status--x {
+  color: var(--color-marker-x);
+}
+
+.status--o {
+  color: var(--color-marker-o);
+}
+
+.status--win {
+  color: var(--color-winning-cell);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xl);
+}
+
+.status--draw {
+  color: var(--color-text-secondary);
+  font-style: italic;
+}
+
+/* Screen-reader live region */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ============================================================
+   Board
+   ============================================================ */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: var(--board-gap);
+  width: var(--board-size);
+  height: var(--board-size);
+  background-color: var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--board-gap);
+  box-shadow: var(--shadow-cell);
+}
+
+/* ============================================================
+   Cell
+   ============================================================ */
+.board__cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-cell);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-cell);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-base),
+    border-color var(--transition-base),
+    color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  outline: none;
+  /* prevent text selection */
+  user-select: none;
+  -webkit-user-select: none;
+  line-height: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.board__cell:hover:not(:disabled) {
+  background-color: var(--color-bg-cell-hover);
+}
+
+.board__cell:focus-visible {
+  box-shadow: var(--shadow-focus);
+  border-color: var(--color-border-focus);
+}
+
+.board__cell:disabled {
+  cursor: default;
+}
+
+/* Filled states */
+.board__cell--filled {
+  cursor: default;
+}
+
+.board__cell--x {
+  color: var(--color-marker-x);
+}
+
+.board__cell--o {
+  color: var(--color-marker-o);
+}
+
+/* Winning cell highlight */
+.board__cell--winning {
+  background-color: var(--color-bg-cell-hover);
+  border-color: var(--color-winning-cell);
+  color: var(--color-winning-cell);
+  box-shadow: 0 0 12px rgba(251, 191, 36, 0.4);
+}
+
+/* ============================================================
+   Reset Button
+   ============================================================ */
+.reset-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-xl);
+  background-color: var(--color-btn-bg);
+  color: var(--color-btn-text);
+  font-family: var(--font-family-base);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-medium);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  box-shadow: var(--shadow-btn);
+  transition:
+    background-color var(--transition-base),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+  outline: none;
+  min-width: 8rem;
+  letter-spacing: 0.02em;
+}
+
+.reset-button:hover {
+  background-color: var(--color-btn-bg-hover);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+.reset-button:active {
+  transform: translateY(1px);
+  box-shadow: var(--shadow-btn);
+}
+
+.reset-button:focus-visible {
+  box-shadow: var(--shadow-focus);
+}
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+/* Small phones */
+@media (max-width: 479px) {
+  :root {
+    --board-size: min(92vw, 22rem);
+    --font-size-2xl: 1.5rem;
+    --font-size-xl: 1.25rem;
+    --font-size-lg: 1rem;
+  }
+
+  .app {
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg) var(--spacing-sm);
+  }
+}
+
+/* Tablets and up */
+@media (min-width: 768px) {
+  :root {
+    --board-size: min(70vw, 30rem);
+  }
+
+  .app {
+    gap: var(--spacing-2xl);
+    padding: var(--spacing-2xl) var(--spacing-xl);
+  }
+}
+
+/* Large screens */
+@media (min-width: 1024px) {
+  :root {
+    --board-size: 28rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
